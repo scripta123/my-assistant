@@ -1,8 +1,8 @@
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
-const app = express();
 
+const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -12,11 +12,13 @@ app.get('/', (req, res) => {
 
 app.post('/chat', async (req, res) => {
   try {
-    const messaggio = req.body.message || "Ciao";
-    
+    const userMessage = req.body.message || "Ciao";
+
     const response = await axios.post('https://api.x.ai/v1/chat/completions', {
       model: "grok-4.3",
-      messages: ,
+      messages: [
+        { role: "user", content: userMessage }
+      ],
       temperature: 0.7,
       max_tokens: 500
     }, {
@@ -26,16 +28,15 @@ app.post('/chat', async (req, res) => {
       }
     });
 
-    const rispostaAI = response.data.choices[0].message.content;
-    res.json({ reply: rispostaAI });
-    
+    const aiResponse = response.data.choices[0].message.content;
+    res.json({ reply: aiResponse });
   } catch (error) {
     console.error('Errore API:', error.response?.data || error.message);
-    res.json({ reply: "Mi dispiace, sto avendo problemi a rispondere in questo momento. Puoi riprovare?" });
+    res.json({ reply: "Mi dispiace, sto avendo problemi a rispondere in questo momento." });
   }
 });
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Assistente Grok attivo sulla porta ${PORT}`);
+  console.log(`✅ Assistente attivo sulla porta ${PORT}`);
 });
