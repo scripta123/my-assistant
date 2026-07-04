@@ -15,10 +15,8 @@ app.post('/chat', async (req, res) => {
     const messaggio = req.body.message || "Ciao";
     
     const response = await axios.post('https://api.x.ai/v1/chat/completions', {
-      model: "grok-beta",
-      messages: [
-        { role: "user", content: messaggio }
-      ],
+      model: "grok-4.3",
+      messages: ,
       temperature: 0.7,
       max_tokens: 500
     }, {
@@ -32,8 +30,8 @@ app.post('/chat', async (req, res) => {
     res.json({ reply: rispostaAI });
     
   } catch (error) {
-    console.error('Errore:', error.message);
-    res.json({ reply: "Mi dispiace, ho avuto un problema. Puoi ripetere?" });
+    console.error('Errore API:', error.response?.data || error.message);
+    res.json({ reply: "Mi dispiace, sto avendo problemi a rispondere in questo momento. Puoi riprovare?" });
   }
 });
 
