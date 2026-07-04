@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 app.post('/chat', (req, res) => {
   const messaggio = req.body.message || "Ciao";
   res.json({ 
-    reply: "Ciao! Sono il tuo assistente personale. Come posso aiutarti oggi?" 
+    reply: `Hai detto: "${messaggio}". Sono il tuo assistente personale!` 
   });
 });
 
