@@ -29,8 +29,8 @@ app.post('/chat', async (req, res) => {
     res.json({ reply: rispostaAI });
     
   } catch (error) {
-    console.error(error);
-    res.json({ reply: "Mi dispiace, ho avuto un problema. Puoi ripetere?" });
+    console.error('Errore:', error.message);
+    res.json({ reply: "Mi dispiace, ho avuto un problema tecnico. Puoi ripetere?" });
   }
 });
 
